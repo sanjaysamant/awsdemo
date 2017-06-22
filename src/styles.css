@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+
+.error-msg{
+    text-align: right !important;
+    color: #f00 !important;
+    font-size: 12px !important;
+}
+
+/*primeng component styling*/
+.ui-tabview-nav li{
+    background-color: white !important;
+    border-radius: 0 !important;
+    padding: 5px 20px !important;
+    
+}
+.ui-tabview-selected a{
+    color: #333 !important;
+}
+.ui-tabview-nav li.ui-tabview-selected{
+    background-color: #eee !important;
+    border: 1px solid #ccc !important;
+    border-bottom: 0 !important;
+}
+.ui-button {
+    border-radius: 0 !important;
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 0px !important;
+}
+.ui-growl{
+    z-index: 9999 !important;
+}
+body .ui-fileupload .ui-fileupload-content,.ui-fileupload-row>div {
+    padding: 5px !important;
+}
+
+
+@media screen and (max-width: 992px)
+{
+.push-right .sidebar {
+    left: -235px!important;
+}
+.sidebar {
+    top: 52px;
+    left: 0;
+}
+}
+
+

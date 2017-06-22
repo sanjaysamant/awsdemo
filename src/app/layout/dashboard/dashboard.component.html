@@ -1,0 +1,344 @@
+<ng2-slim-loading-bar  [height]="'4px'"></ng2-slim-loading-bar>
+
+<p-growl [value]="msgs"></p-growl>
+<div class="row">
+  <div class="col-sm-9 dashboard-tabview">
+    <!--Primeng TAB area-->
+    <p-tabView >
+      <p-tabPanel header="GROUPS" >
+        <div class="row" *ngIf="isAdminRole() == true">
+          <div [hidden]="!edited" >
+            <button pButton type="button" label="Create Group" (click)="addgroup()" class="pull-right ui-button-success"></button>
+          </div>
+       <!-- Add Group Dialog -->
+          <p-dialog header="Add Group" [(visible)]="showGroupDialog" modal="modal" width="720" responsive="true">
+            <form [formGroup]="addGroupData" (ngSubmit)="addGrouData()">
+
+              <div class="form-group has-feedback input-width  ">
+                <input type="text" name="Group_Name" value="" formControlName="Group_Name" placeholder="Group Name" class="form-control">
+                <div *ngIf="addGroupData.get('Group_Name').hasError('required') && addGroupData.get('Group_Name').touched" class="alert alert-danger">
+                  {{ groupValidationMessages.Group_Name }}
+                </div>
+              </div>
+
+              <div class="form-group has-feedback">
+                <!--<input type="text" name="Group_Description" value="" formControlName="Group_Description" placeholder="Group Description" class="form-control">-->
+                <textarea name="Group_Description" value="" formControlName="Group_Description" placeholder="Group Description" class="form-control" rows="3"></textarea>
+                <div *ngIf="addGroupData.get('Group_Description').hasError('required') && addGroupData.get('Group_Description').touched" class="alert alert-danger">
+                  {{ groupValidationMessages.Group_Description }}
+                </div>
+              </div>
+
+              <div class="form-group has-feedback input-width link-margin">
+                <input type="text" name="Group_Link" value="" formControlName="Group_Link" placeholder="Link Name(without space)" class="form-control">
+                <div *ngIf="addGroupData.get('Group_Link').hasError('required') && addGroupData.get('Group_Link').touched" class="alert alert-danger">
+                  {{ groupValidationMessages.Group_Link }}
+                </div>
+              </div>
+
+              <div class="form-group has-feedback">
+                <input type="file"  color="primary" id="groupimageUpload" name="GROUP_img" value="" formControlName="GROUP_img" >
+                <div *ngIf="errorMessage!== ''" class="alert alert-danger">
+                  {{ errorMessage }}
+                </div>
+              </div>
+
+              <div class="row 2">
+                <div id=wrapper>
+                  <div class="form-group input-width">
+                    <div class="form-group has-feedback employee-heading">Employees</div>
+                    <ul class="list-group">
+                        <li draggable *ngFor="let item of emp_list.Items" [dragData]="item" class="list-group-item list-group-item-new">{{item.first_name}}</li>
+                    </ul>
+                  </div>
+
+                  <div class="form-group input-width drop-box ">
+                    <div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">
+                      <div class="form-group has-feedback caption-padding">Add to group</div>
+                      <div class="panel-body">
+                          <li *ngFor="let item of droppedItems" class="list-group-item">{{item.first_name}}</li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" [disabled]="!addGroupData.valid" class="btn btn-primary btn-block btn-login">Add Group</button>
+              </div>
+            </form>
+          </p-dialog>
+
+        </div>
+
+
+      <div class="row" >
+        <div class="col-sm-4 group-card" *ngFor="let item of group_list.Items" [hidden]="!edited" >
+          <div (click)="getGroupMember(item)">
+            <span>{{item.start_date}}</span>
+            <div class="group-logo">
+              <img src="{{item.group_logo}}" alt="{{item.group_name}}" title="{{item.group_name}}">
+              <p>{{item.group_name}}</p>
+            </div>
+            <div class="group-members">
+              <a href="#" *ngFor="let member of item.member  | slice:0:3 ;let i=index">
+                <img src="{{member.emp_image}}" alt="{{member.first_name}}" title="{{member.first_name}}">
+              </a>
+              <a href="#" *ngIf="item.member.length>3">
+                <span class="more-members">{{item.member.length-3}}+</span>
+              </a>
+
+            </div>
+          </div>
+        </div>        
+      </div>
+
+      <div [hidden]="edited" >
+        <button  pButton type="button" label="Go Back" (click)="activateGroupTab()" class="pull-right ui-button-success"></button>
+      </div>
+      <div class="group-container  col-sm-12" [hidden]="edited">
+        <div class="company-name ">
+          <img class="img-responsive company-logo" src="{{group_emp_list.group_logo}}" alt="{{group_emp_list.group_name}}" title="{{group_emp_list.group_name}}">
+          <div class="desc">{{group_emp_list.group_name}}</div>
+        </div>
+        <p class="group-para"> Project Start Date : {{group_emp_list.start_date}}</p>
+        <div class="employee-group">
+          <ul class="group-list-group" *ngFor="let group_member of group_emp_list.member" >
+            <li class=" group-list-group-item col-sm-4" data-toggle="modal" data-target="#myModal" 
+            (click) = "getMemberDetails(group_member)">
+              <div class="number"> 8</div>
+              <img class="img-responsive member-image" src="{{group_member.emp_image}}" alt="{{group_member.first_name}}" title="{{group_member.first_name}}">
+              <p class="member-name">{{group_member.first_name+" "+ group_member.last_name}}</p>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+          
+
+      </p-tabPanel>
+      <p-tabPanel header="EMPLOYEE" *ngIf="isAdminRole() == true">
+
+        <div class="row">
+          <button *ngIf="isAdminRole() == true" pButton type="button" label="Add Employee" (click)="addEmployee()" class="pull-right ui-button-success"></button>
+          <!-- Add Employee Dialog -->
+          <p-dialog header="Add Employee" [(visible)]="showEmployeeDialog" modal="modal" width="320" responsive="true">
+            
+            <form [formGroup]="addEmployeeData" (ngSubmit)="uploadEmployee()">
+              
+              <div class="form-group has-feedback">
+                <input type="text" name="Employee_First_Name" value="" formControlName="Employee_First_Name" placeholder="First Name" class="form-control" required>
+                <div *ngIf="addEmployeeData.get('Employee_First_Name').hasError('required') && addEmployeeData.get('Employee_First_Name').touched" class="alert alert-danger">
+                  {{ empValidationMessages.Employee_First_Name }}
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="text" name="Employee_Last_Name" value="" formControlName="Employee_Last_Name" placeholder="Last Name" class="form-control">
+                <div *ngIf="addEmployeeData.get('Employee_Last_Name').hasError('required') && addEmployeeData.get('Employee_Last_Name').touched " class="alert alert-danger">
+                  {{ empValidationMessages.Employee_Last_Name }}
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="text" name="Employee_Status" value="" formControlName="Employee_Status" placeholder="Employee Status" class="form-control">
+                <div *ngIf="addEmployeeData.get('Employee_Status').hasError('required') && addEmployeeData.get('Employee_Status').touched " class="alert alert-danger">
+                  {{ empValidationMessages.Employee_Status  }}
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="email" name="Employee_Email" value="" formControlName="Employee_Email" placeholder="Employee Email" class="form-control">
+                <div *ngIf="(addEmployeeData.get('Employee_Email').hasError('required') || addEmployeeData.get('Employee_Email').hasError('email')) && addEmployeeData.get('Employee_Email').touched " class="alert alert-danger">
+                  {{ empValidationMessages.Employee_Email }}
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="text" name="Employee_Mobile" value="" formControlName="Employee_Mobile" placeholder="Employee Mobile" class="form-control">
+                <div *ngIf="addEmployeeData.get('Employee_Mobile').hasError('required') && addEmployeeData.get('Employee_Mobile').touched" class="alert alert-danger">
+                  {{ empValidationMessages.Employee_Mobile }}
+                </div>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="text" name="Employee_Designation" value="" formControlName="Employee_Designation" placeholder="Employee Designation" class="form-control">
+                <div *ngIf="addEmployeeData.get('Employee_Designation').hasError('required') && addEmployeeData.get('Employee_Designation').touched" class="alert alert-danger">
+                  {{ empValidationMessages.Employee_Designation }}
+                </div>
+
+              </div>
+
+              <div class="form-group has-feedback">
+
+                <input type="file"  color="primary" id="employeeImageUpload" name="Employee_img" value="" formControlName="Employee_img" accept="image/jpg" >
+                <div *ngIf="errorMessage!== ''" class="alert alert-danger">
+                  {{ errorMessage }}
+                </div>
+
+              </div>
+              <button type="submit" [disabled]="!addEmployeeData.valid" class="btn btn-primary btn-block btn-login" >Add Employee</button>
+
+
+            </form>
+          </p-dialog>
+
+
+          <!-- Assign KRA Dialog -->
+          <p-dialog header="Assign KRA" [(visible)]="showAssignKraDialog" modal="modal" width="720" responsive="true">
+            <form  (ngSubmit)="assignKratoEmployee()">
+             <div class="row 2">
+             <div id=wrapper>
+                  <div class="form-group input-width">
+                    <div class="form-group has-feedback">KRAs</div>
+                      <ul class="list-group">
+                          <li draggable *ngFor="let item of kra_list.Items" [dragData]="item" class="list-group-item">
+                            {{item.KRA_name}}</li>
+                      </ul>
+                  </div>
+                  
+                  <div class="form-group input-width drop-box">
+                  <div class="panel panel-default" droppable (onDrop)="onKraDrop($event)">
+                      <div class="form-group has-feedback caption-padding">Assign to Employee</div>
+                          <div class="panel-body">
+                              <li *ngFor="let item of droppedKra" class="list-group-item">{{item.KRA_name}}</li>
+                          </div>
+                      </div>
+                  </div>
+             </div>
+              </div>
+
+              <button type="submit"  class="btn btn-primary btn-block btn-login">Assign KRA</button>
+
+
+            </form>
+          </p-dialog>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 employee" *ngFor="let emplist of emp_list.Items">
+            <img src="{{emplist.emp_image}}" alt="{{emplist.first_name}}" title="{{emplist.first_name}}">
+            <p><strong>{{emplist.first_name+" "+  emplist.last_name}} </strong> </p>
+            <button *ngIf="isAdminRole() == true" pButton type="button"  
+            (click)="assignkra(emplist.id)" ><p>{{emplist.designation}}</p> 
+            </button>
+            <!--<p>{{emplist.designation}}</p>-->
+            
+          </div>
+        </div>
+
+
+      </p-tabPanel>
+      <p-tabPanel header="KRA" [selected]="true">
+        <div class="row">
+          <button *ngIf="isAdminRole() == true" pButton type="button" label="Add KRA" (click)="addKra()" class="pull-right ui-button-success"></button>
+          <!-- Add KRA Dialog -->
+          <p-dialog header="Add KRA" [(visible)]="showKraDialog" modal="modal" width="320" responsive="true">
+            <form [formGroup]="addKraData" (ngSubmit)="uploadKra()" novalidate>
+              
+
+              <div class="form-group has-feedback">
+                <input type="text" name="KRA_Name" value="" formControlName="KRA_Name" placeholder="KRA Name" class="form-control">
+                <div *ngIf="addKraData.get('KRA_Name').hasError('required') && addKraData.get('KRA_Name').touched" class="alert alert-danger">
+                  {{ kraValidationMessages.KRA_Name }}
+                </div>
+
+              </div>
+              <div class="form-group has-feedback">
+                <input type="text" name="KRA_Description" value="" formControlName="KRA_Description" placeholder="KRA Description" class="form-control">
+                <div *ngIf="addKraData.get('KRA_Description').hasError('required') && addKraData.get('KRA_Description').touched" class="alert alert-danger">
+                  {{ kraValidationMessages.KRA_Description }}
+                </div>
+
+              </div>
+
+              <div class="form-group has-feedback">
+
+                <input type="file"  color="primary" id="imageUpload" name="KRA_img" value="" formControlName="KRA_img" >
+                <div *ngIf="errorMessage!== ''" class="alert alert-danger">
+                  {{ errorMessage }}
+                </div>
+
+              </div>
+
+              <button type="submit" [disabled]="!addKraData.valid" class="btn btn-primary btn-block btn-login">Add KRA</button>
+
+
+            </form>
+          </p-dialog>
+        </div>
+        <div class="row">
+          <ul class="kra-list">
+            <li *ngFor="let item of kra_list.Items">
+              <div>
+                <img src="{{item.image}}" alt="{{item.KRA_name}}">
+                <span class="kra-name">{{item.KRA_name}}</span>
+                <span>{{item.description}}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+       </p-tabPanel>
+    </p-tabView>
+
+  </div>
+
+
+
+  <div class="col-sm-3 top-10-empview">
+    <h4>TOP 10 EMPLOYEES</h4>
+    <ul>
+      <li *ngFor="let emp of employee">
+        <span class="emp_pic"><img src="{{emp.profile_img}}" alt="{{emp.name}}" title="{{emp.name}}"><span>{{emp.points}}</span></span>
+        <span class="emp_name">{{emp.name}}</span>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+          <h4 class="modal-title"><img class=" popup-image" src="{{emp_kra1.emp_image}}" alt="{{emp_kra1.first_name}}"> 
+          {{emp_kra1.first_name+" "+ emp_kra1.last_name}}</h4>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs">
+
+            <li class="active"><a href="#">KRA</a></li>
+            <li><a >APPRECIATION</a></li>
+          </ul>
+          <div class="dropdown col-sm-offset-8">
+            <button class="btn btn-prime dropdown-toggle" type="button" data-toggle="dropdown">KRA TEMPLATES
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">XYZ</a></li>
+              <li><a href="#">ABC</a></li>
+              <li><a href="#">HJS</a></li>
+            </ul>
+          </div>
+        <!--<div >-->
+          <div class="square" *ngFor ="let kradata of emp_kra1.kra" >
+            <div class="content" >
+              <div class="table">
+                  <div class="table-cell numbers" >
+                    
+                      <div>
+                        <img class=" popup-image" src="{{kradata.image}}" > 
+                        {{kradata.KRA_name}}
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        <!--</div>-->
+        </div>
+        <div class="modal-footer">
+          <a href="#"> Save as Template</a>
+          <button type="button" class="btn btn-default" id="done-btn"  data-dismiss="modal">DONE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

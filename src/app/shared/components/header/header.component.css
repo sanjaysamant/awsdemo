@@ -1,0 +1,23 @@
+*{
+border-radius: 0;
+}
+.fixed-top {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.navbar-form{
+    padding-right: 0;
+}
+.navbar-brand-logo{
+    margin-left: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+

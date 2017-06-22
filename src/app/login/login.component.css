@@ -1,0 +1,58 @@
+.form-control {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #999999;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+.login-box {
+    width: 360px;
+    margin: 7% auto;
+}.login-page {
+    background: #d2d6de;
+}
+
+.login-logo{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 300;
+}.login-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}.login-box-body {
+    background: #222;
+    padding: 20px;
+    border-top: 0;
+    color: #fff;
+}.has-feedback {
+    position: relative;
+}
+.form-group {
+    margin-bottom: 15px;
+}.has-feedback .form-control {
+    padding-right: 42.5px;
+}.login-box-body .form-control-feedback {
+    color: #777;
+    height: 40px;
+    line-height: 40px;
+}
+.btn-login {
+    border-radius: 0;
+    margin-top: 10px;
+    padding: 10px;
+    text-transform: uppercase;
+}
+.ng-touched .ng-invalid{
+    border:1px solid #f00;
+}

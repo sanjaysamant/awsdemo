@@ -1,0 +1,334 @@
+.ui-button{
+    margin-right: 4px;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.dashboard-tabview,.top-10-empview{
+    padding-top:15px;
+}
+.dashboard-tabview{
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: auto;
+    height: 100vh;
+    padding-bottom: 50px;
+}
+.top-10-empview{
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #efefef;
+    padding: 15px;
+    position: fixed;
+    right: 0;
+    width: 250px;
+}
+.top-10-empview h4{
+    font-size: 16px;
+    font-weight: normal;
+    padding-bottom: 10px;
+
+}
+.top-10-empview ul,.kra-list{
+    margin: 0;
+    padding: 0;
+}
+.top-10-empview ul li{
+    list-style: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+.emp_pic{
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+.emp_pic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+.emp_pic span{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #333;
+    line-height: 20px;
+    text-align: center;
+    font-size: 10px;
+    top: -5px;
+    right: -5px;
+    border: 1px solid #aaa;
+}
+.emp_name{
+    margin-left: 10px;
+}
+.group-card,.employee{
+    padding: 10px;
+    border: 6px solid #efefef;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    margin: 1%;
+    box-sizing: border-box;
+    width: 31.33%;
+}
+.employee{
+    text-align: center;
+}
+.group-logo{
+    text-align: center;
+    padding: 15px 0;
+    font-size: 16px;
+
+}
+.group-logo img {
+    width: 120px;
+    margin-bottom: 10px;
+}
+.group-members img,.employee img,.kra-list li img {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    margin-right: 5px;
+}
+.employee p{
+    margin: 0;
+}
+.group-members a{
+    text-decoration: none;
+}
+.list-group-item-new{
+  display: inline-block;
+  min-width: 150px;
+  margin: 5px;
+  text-align: center;
+}
+.more-members{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #333;
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: bold;
+    background-color: #efefef;
+}
+.kra-list li{
+    list-style: none;
+    padding: 10px;
+    border:5px solid #ddd;
+    margin-bottom: 5px;
+}
+.kra-name{
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #333;
+    color: #fff;
+}
+
+.row{
+  margin-left: 0px;
+  margin-right:0px;
+}
+.caption-padding{
+  padding:10px;
+}
+.employee-heading{
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.btn-add-group{
+  width: 20%;
+  float: right;
+}
+.input-width{
+  width: 49%;
+  display: inline-block;
+
+}
+.link-margin{
+  margin-left: 8px;
+}
+.drop-box{
+  vertical-align: top;
+  margin-top: 40px;
+}
+#wrapper{
+  width:100%;
+  margin:0px auto;
+}
+
+
+.company-name{
+  margin: auto;
+  width: 63%;
+
+
+}
+
+
+.desc{
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 10px;
+}
+.company-logo{
+  width: 25%;
+  margin-left:38%;
+}
+.group-container{
+  width: 100%;
+}
+.group-para{
+  padding: 10px;
+  font-size: 14px;
+  margin-left: 13px;
+
+}
+.member-image{
+  border-radius: 100%;
+width: 26%;
+height: 50px;
+border: 1px solid #eae7e7;
+float: left;
+}
+.group-list-group{
+  list-style-type: none;
+  margin-left: -25px;
+}
+.number{
+  border-radius: 100%;
+border: 1px solid rgba(159, 157, 157, 0.61);
+width: 8%;
+
+text-align: center;
+float: inherit;
+margin-left: 54px;
+margin-top: -8px;
+position: absolute;
+z-index: 20;
+background-color: white;
+
+}
+.member-name{
+  display: inline-block;
+vertical-align: middle;
+margin-top: 16px;
+font-size: 14px;
+
+}
+.group-list-group-item{
+  display: inline-block;
+    min-width: 190px;
+    margin-bottom:10px;
+    border: 1px solid rgba(159, 157, 157, 0.61);
+    text-align: center;
+    padding: 9px;}
+
+.add-element{
+  border: 1px dashed rgba(159, 157, 157, 0.61);
+
+}
+.plus-icon{
+  font-size: 58px;
+color: grey;
+} 
+ .popup-image{
+  border-radius: 100%;
+  border: 1px solid grey;
+  width: 50px;
+  height: 50px;
+  max-width: 100%;
+  display: inline-block;
+}
+.modal-title{
+  text-transform: uppercase;
+  padding-left: 5px;
+  font-size: 14px;
+}
+.btn-prime{
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+.btn{
+  border: 1px solid lightgrey !important;
+  margin-top: 3%
+}
+.square {
+    float:left;
+    position: relative;
+    width: 20%;
+    padding-bottom : 20%; /* = width for a 1:1 aspect ratio */
+    margin:1.66%;
+    background-color:#ededed;
+    overflow:hidden;
+    border: 1px solid lightgrey
+}
+
+.content {
+    position:absolute;
+    height:90%; /* = 100% - 2*5% padding */
+    width:90%; /* = 100% - 2*5% padding */
+    padding: 5%;
+    text-align: center;
+    font-weight: bold;
+
+}
+.table{
+    display:table;
+    width:100%;
+    height:100%;
+}
+.table-cell{
+    display:table-cell;
+    vertical-align:middle;
+}
+/*  For list */
+ul{
+    text-align:left;
+    margin:5% 0 0;
+    padding:0;
+    list-style-position:inside;
+}
+li{
+    margin: 0 0 0 5%;
+    padding:0;
+}
+.modal-body{
+  height: 30%
+}
+.dropdown{
+  float: right;
+  margin-top: 10px;
+}
+.modal-footer a{
+  padding: 15px;
+  color: black;
+  text-decoration: underline;
+
+}
+#done-btn{
+  vertical-align: baseline;
+background-color: #9f9e9e;
+color: white;
+font-weight: bold;
+}
+.nav-tab-group{
+  margin-top: 0px;
+}
+.nav-tabs > li {
+    margin-bottom: -1px !important;
+}
+.modal-footer{
+  margin-top: 30%
+} 

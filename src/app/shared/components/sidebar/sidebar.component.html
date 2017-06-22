@@ -1,0 +1,49 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+
+<div class="profile-area" *ngFor="let item of user_list.Items">
+  <div class="profile-image"><img src="{{item.emp_image}}" alt="{{item.first_name}}" title="{{item.first_name}}">
+  <h4>{{item.first_name+" "+ item.last_name}}</h4>
+  <p>{{item.designation}}</p>
+  </div>
+  
+</div>
+
+
+    <ul class="list-group">
+      <li> 
+        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="glyphicon glyphicon-dashboard"></i>Dashboard
+        </a>
+      </li>
+       <li> 
+        <a routerLink="/my_groups" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="glyphicon glyphicon-th"></i>My Groups
+        </a>
+      </li>
+       <li> 
+        <a routerLink="/KRA_and_tracking" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="glyphicon glyphicon-stats"></i>KRA &amp; Tracking
+        </a>
+      </li>
+       <li> 
+        <a routerLink="/settings" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="glyphicon glyphicon-cog"></i>Settings
+        </a>
+      </li>
+       <li> 
+        <a (click) = "Logout()" class="list-group-item">
+            <i class="glyphicon glyphicon-log-out"></i>Sign Out
+        </a>
+      </li>
+    </ul>
+</nav>
+
+
+
+
+
+
+
+
+
+
